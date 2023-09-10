@@ -1,2 +1,2 @@
-# markdownsuite.github.io
-Markdown Editor PWA
+# Markdownsuite Website
+Markdown Editor PWA website.
