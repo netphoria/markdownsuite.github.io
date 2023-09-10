@@ -3,7 +3,6 @@
     "marked": "^9.0.0"
   },
   "scripts": {
-    "build": "npm run build" // Add your actual build command here
+    "build": "npm run build" /* Add your actual build command here */
   }
 }
-
