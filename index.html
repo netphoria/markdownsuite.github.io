@@ -4,16 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Markdown Editor</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu {
+            background-color: #333;
+            padding: 10px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        button {
+            background-color: #007acc;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            background-color: #005ca1;
+        }
+
+        .markdown-container {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+        }
+
+        .editor, .preview {
+            flex: 1;
+            background-color: #333;
+            padding: 20px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .editor {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div class="markdown-container">
-        <div class="markdown-editor">
-            <textarea id="markdown-input" placeholder="Write your Markdown here..."></textarea>
-        </div>
-        <div class="markdown-preview" id="markdown-preview"></div>
+    <div class="menu">
+        <button id="reset-button">Reset</button>
+        <button id="copy-button">Copy Markdown</button>
     </div>
-    <script src="marked.min.js"></script>
-    <script src="script.js"></script>
+    <div class="markdown-container">
+        <textarea id="markdown-input" class="editor" placeholder="Enter your Markdown here..."></textarea>
+        <div id="markdown-preview" class="preview"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        const markdownInput = document.getElementById('markdown-input');
+        const markdownPreview = document.getElementById('markdown-preview');
+        const resetButton = document.getElementById('reset-button');
+        const copyButton = document.getElementById('copy-button');
+
+        function updatePreview() {
+            const markdownText = markdownInput.value;
+            const htmlText = marked(markdownText);
+            markdownPreview.innerHTML = htmlText;
+        }
+
+        // Update preview as the user types
+        markdownInput.addEventListener('input', updatePreview);
+
+        // Reset the editor
+        resetButton.addEventListener('click', () => {
+            markdownInput.value = '';
+            updatePreview();
+        });
+
+        // Copy Markdown to clipboard
+        copyButton.addEventListener('click', () => {
+            markdownInput.select();
+            document.execCommand('copy');
+            alert('Markdown copied to clipboard!');
+        });
+
+        // Initial preview update
+        updatePreview();
+    </script>
 </body>
 </html>
